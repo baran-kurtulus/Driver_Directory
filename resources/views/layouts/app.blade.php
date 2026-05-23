@@ -12,16 +12,14 @@
 
     <nav class="bg-white shadow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-            <span class="text-xl font-bold text-gray-800">🚗 Sürücü Rehberi</span>
+            <span class="text-xl font-bold text-gray-800">Sürücü Rehberi</span>
             <div class="flex items-center gap-4">
-                @auth
-                    @if (auth()->user()->is_admin)
-                        <a href="{{ route('drivers.create') }}"
-                           class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition">
-                            + Sürücü Ekle
-                        </a>
-                    @endif
-                @endauth
+                @can('create', \App\Models\Driver::class)
+                    <a href="{{ route('drivers.create') }}"
+                       class="bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium px-4 py-2 rounded-lg transition">
+                        + Sürücü Ekle
+                    </a>
+                @endcan
                 @guest
                     <a href="{{ route('login') }}" class="text-sm text-gray-600 hover:text-gray-900">Giriş</a>
                     <a href="{{ route('register') }}" class="text-sm text-gray-600 hover:text-gray-900">Kayıt Ol</a>

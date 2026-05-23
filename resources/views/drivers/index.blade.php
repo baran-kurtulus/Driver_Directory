@@ -64,9 +64,9 @@
                     <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Araç Tipi</th>
                     <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Durum</th>
                     <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">Ehliyet Bitiş</th>
-                    @if ($canManage)
+                    @can('create', \App\Models\Driver::class)
                         <th class="px-6 py-3 text-left text-xs font-semibold text-gray-500 uppercase tracking-wider">İşlemler</th>
-                    @endif
+                    @endcan
                 </tr>
             </thead>
             <tbody class="bg-white divide-y divide-gray-200">
@@ -95,27 +95,29 @@
                         <td class="px-6 py-4 text-sm text-gray-600">
                             {{ $driver->license_expiry->format('d.m.Y') }}
                         </td>
-                        @if ($canManage)
+                        @can('update', $driver)
                             <td class="px-6 py-4 text-sm">
                                 <div class="flex items-center gap-3">
                                     <a href="{{ route('drivers.edit', $driver) }}"
                                        class="text-blue-600 hover:text-blue-700 font-medium">
                                         Düzenle
                                     </a>
-                                    <form method="POST" action="{{ route('drivers.destroy', $driver) }}">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="text-red-600 hover:text-red-700 font-medium">
-                                            Sil
-                                        </button>
-                                    </form>
+                                    @can('delete', $driver)
+                                        <form method="POST" action="{{ route('drivers.destroy', $driver) }}">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="text-red-600 hover:text-red-700 font-medium">
+                                                Sil
+                                            </button>
+                                        </form>
+                                    @endcan
                                 </div>
                             </td>
-                        @endif
+                        @endcan
                     </tr>
                 @empty
                     <tr>
-                        <td colspan="{{ $canManage ? 8 : 7 }}" class="px-6 py-12 text-center text-gray-400 text-sm">
+                        <td colspan="{{ auth()->user()?->can('create', \App\Models\Driver::class) ? 8 : 7 }}" class="px-6 py-12 text-center text-gray-400 text-sm">
                             Kayıtlı sürücü bulunamadı.
                         </td>
                     </tr>

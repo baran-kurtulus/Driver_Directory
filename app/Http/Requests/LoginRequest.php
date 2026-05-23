@@ -22,7 +22,7 @@ class LoginRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'login' => ['required', 'string', 'max:150'],
+            'email' => ['required', 'email', 'max:150'],
             'password' => ['required', 'string'],
         ];
     }
@@ -33,7 +33,8 @@ class LoginRequest extends FormRequest
     public function messages(): array
     {
         return [
-            'login.required' => 'Kullanıcı adı veya e-posta zorunludur.',
+            'email.required' => 'E-posta zorunludur.',
+            'email.email' => 'Geçerli bir e-posta adresi giriniz.',
             'password.required' => 'Şifre zorunludur.',
         ];
     }

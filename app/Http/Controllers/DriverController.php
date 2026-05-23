@@ -11,23 +11,25 @@ use Illuminate\View\View;
 
 class DriverController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Driver::class, 'driver');
+    }
+
     public function index(Request $request): View
     {
         $drivers = Driver::query()
             ->ofStatus($request->input('status'))
             ->ofVehicleType($request->input('vehicle_type'))
-            ->latest()
+            ->orderBy('id')
             ->paginate(10)
             ->withQueryString();
-
-        $canManage = $request->user()?->is_admin ?? false;
 
         return view('drivers.index', [
             'drivers' => $drivers,
             'statuses' => Driver::STATUSES,
             'vehicleTypes' => Driver::VEHICLE_TYPES,
             'filters' => $request->only(['status', 'vehicle_type']),
-            'canManage' => $canManage,
         ]);
     }
 

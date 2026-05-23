@@ -20,21 +20,15 @@ class AuthController extends Controller
 
     public function login(LoginRequest $request): RedirectResponse
     {
-        $login = $request->string('login')->toString();
         $credentials = [
+            'email' => $request->string('email')->toString(),
             'password' => $request->string('password')->toString(),
         ];
 
-        if (str_contains($login, '@')) {
-            $credentials['email'] = $login;
-        } else {
-            $credentials['name'] = $login;
-        }
-
         if (! Auth::attempt($credentials)) {
             return back()
-                ->withErrors(['login' => 'Kullanıcı adı veya şifre hatalı.'])
-                ->onlyInput('login');
+                ->withErrors(['email' => 'E-posta veya şifre hatalı.'])
+                ->onlyInput('email');
         }
 
         $request->session()->regenerate();

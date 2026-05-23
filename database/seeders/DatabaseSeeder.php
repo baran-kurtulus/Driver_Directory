@@ -20,14 +20,16 @@ class DatabaseSeeder extends Seeder
             DriverSeeder::class,
         ]);
 
-        User::updateOrCreate(
-            ['email' => 'admin@example.com'],
-            [
-                'name' => 'admin',
-                'password' => Hash::make('admin'),
-                'is_admin' => true,
-            ]
-        );
+        if (app()->isLocal()) {
+            User::updateOrCreate(
+                ['email' => 'admin@example.com'],
+                [
+                    'name' => 'admin',
+                    'password' => Hash::make('admin'),
+                    'is_admin' => true,
+                ]
+            );
+        }
 
         User::factory()->create([
             'name' => 'Test User',

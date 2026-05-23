@@ -8,7 +8,8 @@ Route::get('/', fn () => redirect()->route('drivers.index'));
 
 Route::middleware('guest')->group(function () {
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
-    Route::post('/login', [AuthController::class, 'login']);
+    Route::post('/login', [AuthController::class, 'login'])
+        ->middleware('throttle:login');
 
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
     Route::post('/register', [AuthController::class, 'register']);
@@ -20,4 +21,4 @@ Route::post('/logout', [AuthController::class, 'logout'])
 
 Route::resource('drivers', DriverController::class)
     ->only(['index', 'create', 'store', 'edit', 'update', 'destroy'])
-    ->middlewareFor(['edit', 'update', 'destroy'], ['auth', 'admin']);
+    ->middlewareFor(['create', 'store', 'edit', 'update', 'destroy'], 'auth');
