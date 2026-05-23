@@ -1,12 +1,11 @@
 # Driver Directory
 
-Basit bir surucu yonetim uygulamasi. Kullanici kaydi ve giris mevcut. Admin kullanici suruculeri duzenleyebilir ve silebilir.
+Basit bir surucu yonetim uygulamasi. Kullanici kaydi ve giris mevcut. Admin kullanici suruculeri ekleyebilir, duzenleyebilir ve silebilir.
 
 ## Ozellikler
 
 - Surucu listeleme, filtreleme (durum ve arac tipi) ve sayfalama
-- Surucu ekleme formu
-- Admin icin surucu duzenleme ve silme
+- Admin icin surucu ekleme, duzenleme ve silme
 - Giris ve kayit ekranlari
 - Admin bayragi (is_admin) ile yetki kontrolu
 
@@ -50,20 +49,19 @@ npm install
 npm run dev
 ```
 
-## Varsayilan Admin Bilgileri
+## Varsayilan Admin Bilgileri (Sadece Local)
 
-- Kullanici adi: `admin`
 - E-posta: `admin@example.com`
 - Sifre: `admin`
 
-Giris ekraninda kullanici adi veya e-posta ile giris yapabilirsiniz.
+Giris ekraninda sadece e-posta ile giris yapabilirsiniz.
 
 ## Yetkilendirme Davranisi
 
-- Admin kullanicilar: surucu duzenleme ve silme yapabilir.
-- Admin olmayanlar: listeyi gorur, duzenle/sil butonlarini goremez.
+- Admin kullanicilar: surucu ekleme, duzenleme ve silme yapabilir.
+- Admin olmayanlar: listeyi gorur, ekle/duzenle/sil butonlarini goremez.
 
 ## Notlar
 
 - Surucu kaydi icin form dogrulamalari Form Request siniflariyla yapilir.
-- Seed islemi admin kullanici ve ornek surucu kayitlarini olusturur.
+- Seed islemi local ortamda admin kullanici ve ornek surucu kayitlarini olusturur.
